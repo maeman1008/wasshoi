@@ -11,15 +11,16 @@ def scrape(url)
 
   doc = Nokogiri::HTML.parse(html, nil, charset)
 
+  puts "============================URL:#{url}"
   doc.css('p').each do |sample|
     str = sample.to_s
     lines = str.split(/<br>/)
     if !lines.nil?
       lines.each do |line|
-        matches = line.match(/http:\/\/.*flickr.*|http:\/\/.*flk.*/)
+        matches = line.match(/https?:\/\/.*flickr[\S]+/)
         if !matches.nil?
           match = matches[0]
-          p match.sub(/]/, "")
+          puts match.sub(/]/, "")
         end
       end
     end
